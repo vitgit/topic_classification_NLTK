@@ -2,6 +2,7 @@ import nltk
 from utils import create_vocabl
 from utils import filter
 from utils import document_features
+import random
 # features:
 # list of tuples:
 #       (  {feature : value, feature : value, ...},  class)
@@ -14,19 +15,17 @@ import csv
 
 # create vocab:
 words = []
-numWords = 2000
+numWords = 3000
 stopwords = set(line.strip() for line in open('./data/stopwords.txt'))
 with open('./data/train_r6_test4.csv', newline='', encoding='utf-8') as f:
     reader = csv.reader(f)
     for row in reader:
-        contentList = list(row[i] for i in (0,1,2)) # content, topic label, topic name
-        # print (contentList)
-        wordsInRow = contentList[0].split()
+        wordsInRow = row[0].split()
         # print (wordsInRow)
         for w in wordsInRow:
             words.append(w.lower())
 
-print (words)
+# print (words)
 print (words.__len__())
 
 vocab = create_vocabl(words, numWords, stopwords)
@@ -39,7 +38,6 @@ documents = []
 with open('./data/train_r6_test4.csv', newline='', encoding='utf-8') as f:
     reader = csv.reader(f)
     for row in reader: # one doc
-        contentList = list(row[i] for i in (0,1,2)) # content, topic label, topic name
         content = row[0]
         topicLabel = row[1]
         topicName = row[2]
@@ -55,6 +53,8 @@ with open('./data/train_r6_test4.csv', newline='', encoding='utf-8') as f:
             continue
         tup = (words, topicName)
         documents.append(tup)
+        random.seed(4)
+        random.shuffle(documents)
 
 # print(documents)
 
