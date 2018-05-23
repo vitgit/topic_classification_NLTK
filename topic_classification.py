@@ -1,7 +1,7 @@
 import nltk
 from utils import create_vocabl
 from utils import filter
-from utils import document_features
+from utils import document_count_features
 import random
 # features:
 # list of tuples:
@@ -58,7 +58,7 @@ with open('./data/train_r6_test4.csv', newline='', encoding='utf-8') as f:
 
 # print(documents)
 
-featuresets = [(document_features(d, vocab), c) for (d,c) in documents]
+featuresets = [(document_count_features(d, vocab), c) for (d,c) in documents]
 train_set, test_set = featuresets[1000:], featuresets[:1000]
 classifier = nltk.NaiveBayesClassifier.train(train_set)
 print("accuracy", nltk.classify.accuracy(classifier, test_set))

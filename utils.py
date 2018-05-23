@@ -51,7 +51,7 @@ def filter(word):
     word = word.replace("*", "")
     return word
 
-def document_features(document, vocab):
+def document_count_features(document, vocab):
     document_words = set(document)
     features = {}
     counts = Counter(document_words)
@@ -69,6 +69,10 @@ def tranform_documents_to_wo_category(documents):
     return documents_wo_cat
 
 def document_tfidf_features(document, idfs, vocab):
+    # features:
+    # list of tuples:
+    #       (  {feature : value, feature : value, ...},  class)
+    #
     features = {}
     for word in vocab:
         # tfidf1 = tfidf(document, documents_wo_cat, word)
